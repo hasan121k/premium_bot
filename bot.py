@@ -1,8 +1,27 @@
-import telebot, time
+import telebot
+import time
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from config import *
 from database import *
 from security import get_password
+
+# --- Render-এর জন্য নতুন অংশ (Flask & Threading) ---
+from flask import Flask
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is running successfully!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+# ---------------------------------------------------
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -90,5 +109,8 @@ def cb(c):
             return
         bot.send_message(c.message.chat.id, f"🔐 Password: `{get_password()}`", parse_mode="Markdown")
 
-print("Bot running...")
-bot.infinity_polling()
+# --- বট রান করার অংশ ---
+if __name__ == "__main__":
+    print("Starting web server & bot...")
+    keep_alive()  # প্রথমে ওয়েব সার্ভার চালু হবে
+    bot.infinity_polling() # এরপর বট চালু হবে
