@@ -7,4 +7,4 @@ PASSWORD_PREFIX = "monirul"
 TIMEZONE = "Asia/Dhaka"
 
 # Multiple Admins
-ADMINS = [7561864109, 7884194046]  # Telegram UID list
+ADMINS = [7561864109, 7884194046, 6851638362]  # Telegram UID list
